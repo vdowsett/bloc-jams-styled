@@ -48,13 +48,10 @@ class Album extends Component {
 
     handleMouseEnter(index) {
       this.setState({ isHovered: index });
-      console.log( index );
-
     }
 
     handleMouseLeave(index) {
       this.setState({ isHovered: false });
-      console.log( 'exit' )
     }
 
   render() {
@@ -92,9 +89,13 @@ class Album extends Component {
                    <td className="song-table-details">
                      <button key={index} id="icon">
                        {
-                         (this.state.currentSong === song)
-                         ? <span className={ (this.state.isPlaying) ? "ion-md-pause" : "ion-md-play" }> </span>
-                         : (this.state.isHovered) ? <span className="ion-md-play"> </span> : <span className="song-number"> {index+1} </span>
+                         (this.state.currentSong === song) ?
+                         <span className={
+                             (this.state.isPlaying) ? "ion-md-pause" : "ion-md-play" }>
+                         </span> :
+                         (this.state.isHovered === index) ?
+                         <span className="ion-md-play"> </span> :
+                         <span className="song-number"> {index+1} </span>
                        }
                      </button>
                    </td>
