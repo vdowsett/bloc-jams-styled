@@ -12,14 +12,15 @@ class Album extends Component {
     this.state = {
       album: album,
       currentSong: album.songs[0],
-      isPlaying: false
+      isPlaying: false,
+      isHovered: false
     };
 
     this.audioElement = document.createElement('audio');
     this.audioElement.src = album.songs[0].audioSrc;
 
     }
-    
+
     play() {
       this.audioElement.play();
       this.setState({ isPlaying: true });
@@ -43,11 +44,18 @@ class Album extends Component {
         if (!isSameSong) { this.setSong(song); }
         this.play();
       }
+    }
 
+    handleMouseEnter(index) {
+      this.setState({ isHovered: true });
+      console.log( index );
 
+    }
 
-
-  }
+    handleMouseLeave(index) {
+      this.setState({ isHovered: false });
+      console.log( 'exit' )
+    }
 
   render() {
     return (
@@ -75,8 +83,19 @@ class Album extends Component {
 
              {
                this.state.album.songs.map( ( song, index ) =>
-                 <tr className="song" key={index} onClick={() => this.handleSongClick(song)} >
-                   <td className="song-table-details"> {index+1} </td>
+                 <tr className="song" key={index}
+                   onClick={() => this.handleSongClick(song)}
+                    >
+                   <td className="song-table-details">
+                     <button key={index} id="icon"
+                       onMouseEnter={() => this.handleMouseEnter(index)}
+                       onMouseLeave={() => this.handleMouseLeave(index)}>
+                       {  (this.state.currentSong === song)
+                          ? <span className={ (this.state.isPlaying) ? "ion-md-pause" : "ion-md-play" }> </span>
+                          : (this.state.currentSong !== song && index === index && this.state.isHovered) ? <span className="ion-md-play"> </span> : <span className="song-number"> {index+1} </span>
+                      }
+                     </button>
+                   </td>
                    <td className="song-table-details"> {song.title} </td>
                    <td className="song-table-details"> {song.duration} </td>
                  </tr>
