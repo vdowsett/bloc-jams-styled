@@ -114,7 +114,7 @@ class Album extends Component {
     formatTime(time) {
       let minutes = parseInt(time / 60);
       let seconds = parseInt(time % 60);
-      const formatTime = (minutes + ":" + seconds);
+      const formatTime = (minutes + ":" + (seconds > 9 ? "" + seconds: "0" + seconds));
       return formatTime;
     }
 
@@ -164,7 +164,7 @@ class Album extends Component {
                      </button>
                    </td>
                    <td className="song-table-details"> {song.title} </td>
-                   <td className="song-table-details"> {song.duration} </td>
+                   <td className="song-table-details"> { this.formatTime( song.duration ) } </td>
                  </tr>
                )}
 
